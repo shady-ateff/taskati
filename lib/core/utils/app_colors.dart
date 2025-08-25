@@ -8,6 +8,7 @@ class AppColors {
   static Color tetary = Color(0xFFff4667);
   static Color error = Color.fromARGB(255, 224, 18, 56);
   static Color black = Color(0xFF121212);
+  static Color white = Color(0xFFffffff);
   static Color grey = Color(0xFFb4aaaa);
   
 }

@@ -1,0 +1,115 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:taskati/components/buttons/custom_button.dart';
+import 'package:taskati/core/services/hive_helper.dart';
+import 'package:taskati/core/utils/app_colors.dart';
+import 'package:taskati/core/utils/text_styles.dart';
+import 'package:taskati/features/add_task/widgets/custom_form_field.dart';
+import 'package:taskati/features/profile/widgets/edit_name_bottom_sheet.dart';
+import 'package:taskati/features/profile/widgets/image_change_bottom_sheet.dart';
+
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.dark_mode))],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return ImageChangeBottomSheet(
+                        onImageChanged: (filePath) {
+                          HiveHelper.cacheData(
+                            HiveHelper.userImagePath,
+                            filePath,
+                          );
+                          setState(() {});
+                        },
+                      );
+                    },
+                  );
+                },
+                child: Stack(
+                  // alignment: AlignmentDirectional.bottomEnd,
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: FileImage(
+                        File(HiveHelper.getData(HiveHelper.userImagePath)),
+                      ),
+                      radius: 110,
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      right: 10,
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: AppColors.white,
+                        child: Icon(
+                          Icons.photo_camera_rounded,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Gap(15),
+              Divider(),
+              Gap(15),
+              ListTile(
+                iconColor: AppColors.primary,
+                textColor: AppColors.primary,
+                title: Text(
+                  HiveHelper.getData(HiveHelper.userName),
+                  style: TextStyles.getTitle(fontWeight: FontWeight.w600),
+                ),
+                trailing: IconButton.outlined(
+                  onPressed: () {
+                    var nameController = TextEditingController(
+                      text: HiveHelper.getData(HiveHelper.userName),
+                    );
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return EditNameBottomSheet(
+                          nameController: nameController,
+                          onNameChenged: (changedNameController) {
+                            setState(() {
+
+                            });
+                          },
+                        );
+                      },
+                    );
+                  },
+                  icon: Icon(Icons.edit_outlined),
+                  color: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

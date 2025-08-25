@@ -2,11 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taskati/components/buttons/custom_button.dart';
 import 'package:taskati/core/extentions/dialogs.dart';
+import 'package:taskati/core/extentions/navigation.dart';
+import 'package:taskati/core/services/hive_helper.dart';
 import 'package:taskati/core/utils/app_colors.dart';
 import 'package:taskati/core/utils/text_styles.dart';
+import 'package:taskati/features/home/page/home_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -24,7 +29,7 @@ class _SignupPageState extends State<SignupPage> {
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               String error = "";
               if (imagePath == null) {
                 error = " Upload Photo";
@@ -34,8 +39,17 @@ class _SignupPageState extends State<SignupPage> {
               }
               if (error.isNotEmpty) {
                 errorDialog(context, error);
-              } else
-                print("Signed Up Successfully");
+              } else {
+                await HiveHelper.cacheData(HiveHelper.userImagePath, imagePath);
+                await HiveHelper.cacheData(
+                  HiveHelper.userName,
+                  _nameController.text,
+                );
+                print(
+                  '${HiveHelper.getData(HiveHelper.userImagePath)}  -  ${HiveHelper.getData(HiveHelper.userName)}',
+                );
+                replaceTo(context, HomePage());
+              }
             },
             child: Text('Done'),
           ),
@@ -75,6 +89,7 @@ class _SignupPageState extends State<SignupPage> {
                 setState(() {});
               },
             ),
+            Gap(15),
             CustomButton(
               label: "Upload From Gallery",
               onPressed: () async {
@@ -99,7 +114,6 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
   }
-
 
   Future<void> uploadImage({bool isCamera = false}) async {
     var image = await ImagePicker().pickImage(

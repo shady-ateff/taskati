@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:taskati/core/extentions/navigation.dart';
+import 'package:taskati/core/services/hive_helper.dart';
 import 'package:taskati/core/utils/app_colors.dart';
+import 'package:taskati/features/home/page/home_page.dart';
 import 'package:taskati/features/signup/page/signup_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,10 +18,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      Duration(seconds: 4),
-      () => replaceTo(context, SignupPage()),
-    );
+    Future.delayed(Duration(seconds: 4), () {
+      if (HiveHelper.box.isNotEmpty &&
+          HiveHelper.getData(HiveHelper.userImagePath) != null &&
+          HiveHelper.getData(HiveHelper.userName) != null) {
+        replaceTo(context, HomePage());
+      } else {
+        print(
+          'splash : ${HiveHelper.getData(HiveHelper.userImagePath)}  -  ${HiveHelper.getData(HiveHelper.userName)}',
+        );
+        replaceTo(context, SignupPage());
+      }
+    });
   }
 
   @override
