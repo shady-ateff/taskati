@@ -38,4 +38,11 @@ class HiveHelper {
   static dynamic getTask(String key) {
     return taskBox.get(key);
   }
+
+  static Future<void> deleteTask(String id) async {
+    await taskBox.delete(id);
+  }
+  static Future<void> updateTask(TaskModel task) async {
+    await taskBox.put(task.id, task);
+  }
 }

@@ -13,6 +13,7 @@ class CustomFormField extends StatelessWidget {
     this.suffixIcon,
     this.maxLines = 1,
     this.controller,
+    this.validator,
   });
 
   final String title;
@@ -21,6 +22,7 @@ class CustomFormField extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback? onTap;
   final Icon? suffixIcon;
+  final String? Function(String? value)? validator;
   final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class CustomFormField extends StatelessWidget {
         Gap(5),
         TextFormField(
           maxLines: maxLines,
+          validator: validator,
           onTap: onTap,
           controller: controller,
           style: TextStyles.getBody(color: AppColors.black),

@@ -1,11 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:taskati/components/buttons/custom_button.dart';
 import 'package:taskati/core/extentions/navigation.dart';
-import 'package:taskati/core/services/hive_helper.dart';
-import 'package:taskati/core/utils/app_colors.dart';
 import 'package:taskati/core/utils/text_styles.dart';
 import 'package:taskati/features/add_task/page/add_task_page.dart';
 
@@ -31,7 +28,9 @@ class DateHeaderWidget extends StatelessWidget {
           ),
         ),
         CustomButton(label: 'Add Task', onPressed: () {
-          pushTo(context, AddTaskPage());
+          pushTo(context, AddTaskPage()).then((p) {
+            
+          });
         } ,width: 2,),
       ],
     );

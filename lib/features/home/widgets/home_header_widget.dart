@@ -6,9 +6,15 @@ import 'package:taskati/core/utils/app_colors.dart';
 import 'package:taskati/core/utils/text_styles.dart';
 import 'package:taskati/features/profile/page/profile_page.dart';
 
-class HomeHeaderWidget extends StatelessWidget {
-  const HomeHeaderWidget({super.key});
+class HomeHeaderWidget extends StatefulWidget {
+  const HomeHeaderWidget({super.key, this.onProfileUpdated});
 
+  final Function(void p1)? onProfileUpdated;
+  @override
+  State<HomeHeaderWidget> createState() => _HomeHeaderWidgetState();
+}
+
+class _HomeHeaderWidgetState extends State<HomeHeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -29,8 +35,13 @@ class HomeHeaderWidget extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: (){
-            pushTo(context, ProfilePage());
+          onTap: () {
+            pushTo(context, ProfilePage()).then((value) {
+              setState(() {});
+              if (widget.onProfileUpdated != null) {
+                widget.onProfileUpdated!(value);
+              }
+            });
           },
           child: CircleAvatar(
             radius: 24,
@@ -39,7 +50,9 @@ class HomeHeaderWidget extends StatelessWidget {
               radius: 21,
               backgroundImage:
                   HiveHelper.getData(HiveHelper.userImagePath) != null
-                  ? FileImage(File(HiveHelper.getData(HiveHelper.userImagePath)))
+                  ? FileImage(
+                      File(HiveHelper.getData(HiveHelper.userImagePath)),
+                    )
                   : AssetImage('assets/images/user.png'),
             ),
           ),

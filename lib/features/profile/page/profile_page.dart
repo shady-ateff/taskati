@@ -2,12 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:taskati/components/buttons/custom_button.dart';
 import 'package:taskati/core/services/hive_helper.dart';
 import 'package:taskati/core/utils/app_colors.dart';
 import 'package:taskati/core/utils/text_styles.dart';
-import 'package:taskati/features/add_task/widgets/custom_form_field.dart';
 import 'package:taskati/features/profile/widgets/edit_name_bottom_sheet.dart';
 import 'package:taskati/features/profile/widgets/image_change_bottom_sheet.dart';
 

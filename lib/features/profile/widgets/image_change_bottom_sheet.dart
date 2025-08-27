@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:taskati/components/buttons/custom_button.dart';
 
 class ImageChangeBottomSheet extends StatelessWidget {
-  ImageChangeBottomSheet({super.key, required this.onImageChanged});
+  const ImageChangeBottomSheet({super.key, required this.onImageChanged});
   final Function(String filePath) onImageChanged;
 
 
@@ -20,7 +20,7 @@ class ImageChangeBottomSheet extends StatelessWidget {
       }
     }
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),

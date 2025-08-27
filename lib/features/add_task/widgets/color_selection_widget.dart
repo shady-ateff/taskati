@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:taskati/core/models/task_model.dart';
 import 'package:taskati/core/utils/app_colors.dart';
 
 class ColorSelectionWidget extends StatefulWidget {
-  ColorSelectionWidget({super.key, required this.onColorChanged});
+  const ColorSelectionWidget({super.key, required this.onColorChanged});
 
-  final List<Color> taskColor = [
-    AppColors.primary,
-    AppColors.secondary,
-    AppColors.tetary,
-    AppColors.black,
-  ];
-  final ValueChanged<Color> onColorChanged;
+  final ValueChanged<int> onColorChanged;
 
   @override
   State<ColorSelectionWidget> createState() => _ColorSelectionWidgetState();
 }
 
 class _ColorSelectionWidgetState extends State<ColorSelectionWidget> {
-  var _selectedColor;
+  int selectedColor = 0;
   @override
   Widget build(BuildContext context) {
+    var taskColor = TaskModel.taskColor;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 15,
@@ -28,17 +24,17 @@ class _ColorSelectionWidgetState extends State<ColorSelectionWidget> {
         Row(
           spacing: 5,
           children: [
-            ...List.generate(widget.taskColor.length, (indx) {
+            ...List.generate(taskColor.length, (selectedColorIndex) {
               return GestureDetector(
                 onTap: () {
-                  _selectedColor = widget.taskColor[indx];
+                  selectedColor = selectedColorIndex;
                   setState(() {
-                    widget.onColorChanged(_selectedColor);
+                    widget.onColorChanged(selectedColor);
                   });
                 },
                 child: CircleAvatar(
-                  backgroundColor: widget.taskColor[indx],
-                  child: _selectedColor == widget.taskColor[indx]
+                  backgroundColor: taskColor[selectedColorIndex],
+                  child: selectedColor == selectedColorIndex
                       ? Icon(Icons.check, color: Colors.white)
                       : null,
                 ),

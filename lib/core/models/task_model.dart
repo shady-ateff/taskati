@@ -1,5 +1,8 @@
 
+import 'dart:ui';
+
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:taskati/core/utils/app_colors.dart';
 part 'task_model.g.dart';
 
 @HiveType(typeId: 1)
@@ -31,4 +34,33 @@ class TaskModel {
     required this.id,
     required this.isCompleted,
   });
+
+    static final List<Color> taskColor = [
+    AppColors.primary,
+    AppColors.secondary,
+    AppColors.tetary,
+    AppColors.black,
+  ];
+
+  TaskModel copyWith({
+    String? id,
+    String? title,
+    String? description,
+    String? date,
+    String? startTime,
+    String? endTime,
+    int? colorIndex,
+    bool? isCompleted,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      date: date ?? this.date,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      colorIndex: colorIndex ?? this.colorIndex,
+      isCompleted: isCompleted ?? this.isCompleted,
+    );
+  }
 }

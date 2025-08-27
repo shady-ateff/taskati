@@ -3,14 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:taskati/components/buttons/custom_button.dart';
 import 'package:taskati/core/extentions/dialogs.dart';
 import 'package:taskati/core/extentions/navigation.dart';
 import 'package:taskati/core/services/hive_helper.dart';
 import 'package:taskati/core/utils/app_colors.dart';
-import 'package:taskati/core/utils/text_styles.dart';
 import 'package:taskati/features/home/page/home_page.dart';
 
 class SignupPage extends StatefulWidget {
