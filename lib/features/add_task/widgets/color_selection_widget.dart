@@ -3,16 +3,27 @@ import 'package:taskati/core/models/task_model.dart';
 import 'package:taskati/core/utils/app_colors.dart';
 
 class ColorSelectionWidget extends StatefulWidget {
-  const ColorSelectionWidget({super.key, required this.onColorChanged});
+  const ColorSelectionWidget({
+    super.key,
+    required this.onColorChanged,
+    this.initialColor = 0,
+  });
 
   final ValueChanged<int> onColorChanged;
+
+  final int initialColor;
 
   @override
   State<ColorSelectionWidget> createState() => _ColorSelectionWidgetState();
 }
 
 class _ColorSelectionWidgetState extends State<ColorSelectionWidget> {
-  int selectedColor = 0;
+  late int selectedColor;
+  @override
+  void initState() {
+    super.initState();
+    selectedColor = widget.initialColor;
+  }
   @override
   Widget build(BuildContext context) {
     var taskColor = TaskModel.taskColor;

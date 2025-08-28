@@ -5,13 +5,13 @@ class CustomButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
   final double width;
-  final double hight;
+  final double height;
   const CustomButton({
     super.key,
     required this.label,
     required this.onPressed,
     this.width = 220,
-    this.hight = 50,
+    this.height = 50,
   });
 
   @override
@@ -22,7 +22,7 @@ class CustomButton extends StatelessWidget {
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        minimumSize: Size(width, hight),
+        minimumSize: Size(width, height),
       ),
       child: Text(label),
     );

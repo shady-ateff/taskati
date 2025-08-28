@@ -36,7 +36,7 @@ class _SignupPageState extends State<SignupPage> {
                 error = "$error, Enter Your Name";
               }
               if (error.isNotEmpty) {
-                errorDialog(context, error);
+                errorDialog(context, 'Please$error');
               } else {
                 await HiveHelper.cacheData(HiveHelper.userImagePath, imagePath);
                 await HiveHelper.cacheData(
@@ -64,7 +64,7 @@ class _SignupPageState extends State<SignupPage> {
                   ? ClipOval(
                       child: Image.file(
                         File(imagePath!),
-                        // height: 200,
+                        height: 200,
                         width: 200,
                         fit: BoxFit.cover,
                       ),

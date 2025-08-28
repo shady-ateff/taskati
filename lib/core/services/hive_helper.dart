@@ -8,6 +8,7 @@ class HiveHelper {
 
   static String userImagePath = 'imagePath';
   static String userName = 'name';
+  static String isDarkTheme = 'isDarkTheme';
 
   static String tasksBox = 'tasks';
   static String taskID = 'taskID';
@@ -31,6 +32,12 @@ class HiveHelper {
     return box.get(key);
   }
 
+    static void deleteData(String userName) async {
+    await box.delete(userName);
+    await box.delete(isDarkTheme);
+    taskBox.clear();
+    }
+
   static cacheTask(String key, TaskModel task) async{
     await taskBox.put(key, task);
   }
@@ -45,4 +52,5 @@ class HiveHelper {
   static Future<void> updateTask(TaskModel task) async {
     await taskBox.put(task.id, task);
   }
+
 }

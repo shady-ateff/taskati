@@ -10,7 +10,7 @@ void errorDialog(BuildContext context, String error) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10)
         ),
-        content: Text("Please$error", style: TextStyles.getBody()),
+        content: Text(error, style: TextStyles.getBody()),
         backgroundColor: AppColors.error,
       ),
     );

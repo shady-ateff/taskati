@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:taskati/components/buttons/custom_button.dart';
+import 'package:taskati/core/extentions/navigation.dart';
 import 'package:taskati/core/services/hive_helper.dart';
 import 'package:taskati/core/utils/app_colors.dart';
 import 'package:taskati/core/utils/text_styles.dart';
 import 'package:taskati/features/profile/widgets/edit_name_bottom_sheet.dart';
 import 'package:taskati/features/profile/widgets/image_change_bottom_sheet.dart';
+import 'package:taskati/features/signup/page/signup_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -18,9 +21,20 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    bool isDark =
+        HiveHelper.getData(HiveHelper.isDarkTheme) ??
+        Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.dark_mode))],
+        actions: [
+          IconButton(
+            onPressed: () {
+              HiveHelper.cacheData(HiveHelper.isDarkTheme, !isDark);
+              setState(() {});
+            },
+            icon: Icon(isDark ? Icons.light_mode : Icons.dark_mode),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
@@ -86,15 +100,22 @@ class _ProfilePageState extends State<ProfilePage> {
                       text: HiveHelper.getData(HiveHelper.userName),
                     );
                     showModalBottomSheet(
+                      isScrollControlled: true,
+
                       context: context,
                       builder: (context) {
-                        return EditNameBottomSheet(
-                          nameController: nameController,
-                          onNameChenged: (changedNameController) {
-                            setState(() {
-
-                            });
-                          },
+                        return Padding(
+                        padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(
+                            context,
+                          ).viewInsets.bottom, 
+                        ),
+                          child: EditNameBottomSheet(
+                            nameController: nameController,
+                            onNameChenged: (changedNameController) {
+                              setState(() {});
+                            },
+                          ),
                         );
                       },
                     );
@@ -103,10 +124,26 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: AppColors.primary,
                 ),
               ),
+              Gap(70),
             ],
           ),
         ),
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
+        child: CustomButton(
+          onPressed: () {
+            HiveHelper.deleteData(HiveHelper.userName);
+            HiveHelper.deleteData(HiveHelper.userImagePath);
+            pushAndRemoveUntil(context, SignupPage());
+          },
+          width: double.infinity,
+          // height: 40,
+          label: 'Logout',
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      resizeToAvoidBottomInset: true,
     );
   }
 }

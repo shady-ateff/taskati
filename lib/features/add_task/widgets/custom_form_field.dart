@@ -36,12 +36,12 @@ class CustomFormField extends StatelessWidget {
           validator: validator,
           onTap: onTap,
           controller: controller,
-          style: TextStyles.getBody(color: AppColors.black),
+          style: TextStyles.getBody(),
           readOnly: !isEnabled,
           decoration: InputDecoration(
             hintText: hintText,
+
             // enabled: isEnabled,
-          
             suffixIcon: suffixIcon,
           ),
         ),
