@@ -64,5 +64,5 @@ This project was developed as part of the **DEPI Cross-Platform Training**.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/taskati.git
+   git clone https://github.com/shady-ateff/taskati.git
    cd taskati
